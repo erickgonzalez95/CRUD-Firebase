@@ -48,19 +48,16 @@ public class InicioActivity extends AppCompatActivity implements PersonAdapter.O
     public static final String EXTRA_APP = "app";
     public static final String EXTRA_PASS = "pass";
     String pnombre,pcorreo,papp,ppass,puid;
+    int val;
 
     @Override
     public void OnDeleteClick(int position) {
 
+       val = position;
         Persona p = persons.get(position);
 
-        puid = p.getUid();
         pnombre = p.getNombre();
-
-       reference.child("persona").child(puid).removeValue();
-
-
-        Toast.makeText(this,"Borrado correctamente", Toast.LENGTH_SHORT).show();
+       ShowConfirmDelete();
 
     }
 
@@ -115,6 +112,50 @@ public class InicioActivity extends AppCompatActivity implements PersonAdapter.O
             @Override
             public void onClick(View v) {
                myDialog.dismiss();
+            }
+        });
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        myDialog.show();
+    }
+    public void ShowConfirmDelete() {
+
+        TextView txtName,txtclose;
+        Button delete,cancel;
+
+
+        myDialog.setContentView(R.layout.delete_dialog);
+        txtName = myDialog.findViewById(R.id.name);
+
+        txtName.setText("Seguro que deseas eliminar a: " + pnombre);
+
+        txtclose = myDialog.findViewById(R.id.txtclose);
+
+       delete = myDialog.findViewById(R.id.btndelete);
+        cancel = myDialog.findViewById(R.id.btncancel);
+
+
+        delete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Persona p = persons.get(val);
+
+                puid = p.getUid();
+                reference.child("persona").child(puid).removeValue();
+                myDialog.dismiss();
+                Toast.makeText(getApplicationContext(),"Borrado correctamente", Toast.LENGTH_SHORT).show();
+            }
+        });
+        txtclose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
+            }
+        });
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                myDialog.dismiss();
             }
         });
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
