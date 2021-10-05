@@ -43,8 +43,8 @@ public class InicioActivity extends AppCompatActivity implements PersonAdapter.O
     PersonAdapter pa;
     Dialog myDialog;
     public static final String EXTRA_ID = "id";
-    public static final String EXTRA_NOMBRE = "nombre";
-    public static final String EXTRA_CORREO = "correo";
+    public static final String EXTRA_NOMBRE = "name";
+    public static final String EXTRA_CORREO = "mail";
     public static final String EXTRA_APP = "app";
     public static final String EXTRA_PASS = "pass";
     String pnombre,pcorreo,papp,ppass,puid;
